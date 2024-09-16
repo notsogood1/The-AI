@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Language Model</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .output {
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Language Model</h1>
+    <textarea id="prompt" placeholder="Enter a prompt..."></textarea><br>
+    <button onclick="generateText()">Generate</button>
+    <div class="output" id="output"></div>
+
+    <script>
+        async function generateText() {
+            const prompt = document.getElementById('prompt').value;
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt })
+            });
+
+            const result = await response.json();
+            document.getElementById('output').innerText = result.generated_text;
+        }
+    </script>
+</body>
+</html>
